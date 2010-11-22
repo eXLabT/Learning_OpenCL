@@ -1,0 +1,12 @@
+###########################################################
+### lesson00
+###########################################################
+*Baisc cmake script
+*Prime OpenCL application
+Based on ${GPUCOMPUTING_SDK_ROOT}/OpenCL/src/oclVectorAdd.cpp
+
+###########################################################
+### lesson01
+###########################################################
+*Device compability query
+Based on ${GPUCOMPUTING_SDK_ROOT}/OpenCL/src/oclDeviceQuery.cpp
