@@ -1,0 +1,77 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+CL_DEVICE_COMPUTE_CAPABILITY_MAJOR_NV	/Developer/GPU Computing/OpenCL/common/inc/oclUtils.h	/^  #define CL_DEVICE_COMPUTE_CAPABILITY_MAJOR_NV /;"	d
+CL_DEVICE_COMPUTE_CAPABILITY_MINOR_NV	/Developer/GPU Computing/OpenCL/common/inc/oclUtils.h	/^  #define CL_DEVICE_COMPUTE_CAPABILITY_MINOR_NV /;"	d
+CL_DEVICE_GPU_OVERLAP_NV	/Developer/GPU Computing/OpenCL/common/inc/oclUtils.h	/^  #define CL_DEVICE_GPU_OVERLAP_NV /;"	d
+CL_DEVICE_INTEGRATED_MEMORY_NV	/Developer/GPU Computing/OpenCL/common/inc/oclUtils.h	/^  #define CL_DEVICE_INTEGRATED_MEMORY_NV /;"	d
+CL_DEVICE_KERNEL_EXEC_TIMEOUT_NV	/Developer/GPU Computing/OpenCL/common/inc/oclUtils.h	/^  #define CL_DEVICE_KERNEL_EXEC_TIMEOUT_NV /;"	d
+CL_DEVICE_REGISTERS_PER_BLOCK_NV	/Developer/GPU Computing/OpenCL/common/inc/oclUtils.h	/^  #define CL_DEVICE_REGISTERS_PER_BLOCK_NV /;"	d
+CL_DEVICE_WARP_SIZE_NV	/Developer/GPU Computing/OpenCL/common/inc/oclUtils.h	/^  #define CL_DEVICE_WARP_SIZE_NV /;"	d
+Cleanup	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^void Cleanup(int iExitCode)$/;"	f
+DisplayGL	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^void DisplayGL()$/;"	f
+GL_SHARING_EXTENSION	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^   #define GL_SHARING_EXTENSION /;"	d	file:
+InitGL	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^void InitGL(int argc, const char** argv)$/;"	f
+KeyboardGL	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^void KeyboardGL(unsigned char key, int x, int y)$/;"	f
+OCL_SDKREVISION	/Developer/GPU Computing/OpenCL/common/inc/oclUtils.h	/^#define OCL_SDKREVISION /;"	d
+OCL_UTILS_H	/Developer/GPU Computing/OpenCL/common/inc/oclUtils.h	/^#define OCL_UTILS_H$/;"	d
+TestNoGL	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^void TestNoGL()$/;"	f
+__oclCheckErrorEX	/Developer/GPU Computing/OpenCL/common/inc/oclUtils.h	/^inline void __oclCheckErrorEX(cl_int iSample, cl_int iReference, void (*pCleanup)(int), const char* cFile, const int iLine)$/;"	f
+anim	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^float anim = 0.0;$/;"	v
+bNoPrompt	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^shrBOOL bNoPrompt = shrFALSE;  $/;"	v
+bQATest	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^shrBOOL bQATest = shrFALSE;$/;"	v
+cPathAndName	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^char* cPathAndName = NULL;          \/\/ var for full paths to data, src, etc.$/;"	v
+cSourceCL	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^char* cSourceCL = NULL;             \/\/ Buffer to hold source for compilation $/;"	v
+cdDevices	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^cl_device_id* cdDevices;$/;"	v
+ciErrNum	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^cl_int ciErrNum;$/;"	v
+ckKernel	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^cl_kernel ckKernel;$/;"	v
+cpPlatform	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^cl_platform_id cpPlatform;$/;"	v
+cpProgram	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^cl_program cpProgram;$/;"	v
+cqCommandQueue	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^cl_command_queue cqCommandQueue;$/;"	v
+createVBO	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^void createVBO(GLuint* vbo)$/;"	f
+cxGPUContext	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^cl_context cxGPUContext;$/;"	v
+g_Index	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^int g_Index = 0;$/;"	v
+iFrameCount	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^int iFrameCount = 0;                \/\/ FPS count for averaging$/;"	v
+iFrameTrigger	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^int iFrameTrigger = 90;             \/\/ FPS trigger for sampling$/;"	v
+iFramesPerSec	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^int iFramesPerSec = 0;              \/\/ frames per second$/;"	v
+iGLUTWindowHandle	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^int iGLUTWindowHandle = 0;          \/\/ handle to the GLUT window$/;"	v
+iTestSets	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^int iTestSets = 3;$/;"	v
+main	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^int main(int argc, const char **argv)$/;"	f
+mesh_height	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^const unsigned int mesh_height = 256;$/;"	v
+mesh_width	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^const unsigned int mesh_width = 256;$/;"	v
+motion	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^void motion(int x, int y)$/;"	f
+mouse	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^void mouse(int button, int state, int x, int y)$/;"	f
+mouse_buttons	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^int mouse_buttons = 0;$/;"	v
+mouse_old_x	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^int mouse_old_x, mouse_old_y;$/;"	v
+mouse_old_y	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^int mouse_old_x, mouse_old_y;$/;"	v
+oclCheckError	/Developer/GPU Computing/OpenCL/common/inc/oclUtils.h	/^#define oclCheckError(/;"	d
+oclCheckErrorEX	/Developer/GPU Computing/OpenCL/common/inc/oclUtils.h	/^#define oclCheckErrorEX(/;"	d
+oclDeleteMemObjs	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^void oclDeleteMemObjs(cl_mem* cmMemObjs, int iNumObjs)$/;"	f
+oclErrorString	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^const char* oclErrorString(cl_int error)$/;"	f
+oclGetDev	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^cl_device_id oclGetDev(cl_context cxGPUContext, unsigned int nr)$/;"	f
+oclGetDevCap	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^int oclGetDevCap(cl_device_id device)$/;"	f
+oclGetFirstDev	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^cl_device_id oclGetFirstDev(cl_context cxGPUContext)$/;"	f
+oclGetMaxFlopsDev	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^cl_device_id oclGetMaxFlopsDev(cl_context cxGPUContext)$/;"	f
+oclGetPlatformID	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^cl_int oclGetPlatformID(cl_platform_id* clSelectedPlatformID)$/;"	f
+oclGetProgBinary	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^void oclGetProgBinary( cl_program cpProgram, cl_device_id cdDevice, char** binary, size_t* length)$/;"	f
+oclImageFormatString	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^const char* oclImageFormatString(cl_uint uiImageFormat)$/;"	f
+oclLoadProgSource	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^char* oclLoadProgSource(const char* cFilename, const char* cPreamble, size_t* szFinalLength)$/;"	f
+oclLogBuildInfo	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^void oclLogBuildInfo(cl_program cpProgram, cl_device_id cdDevice)$/;"	f
+oclLogPtx	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^void oclLogPtx(cl_program cpProgram, cl_device_id cdDevice, const char* cPtxFileName)$/;"	f
+oclPrintDevInfo	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^void oclPrintDevInfo(int iLogMode, cl_device_id device)$/;"	f
+oclPrintDevName	/Developer/GPU Computing/OpenCL/common/src/oclUtils.cpp	/^void oclPrintDevName(int iLogMode, cl_device_id device)$/;"	f
+pCleanup	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^void (*pCleanup)(int) = &Cleanup;$/;"	v
+rotate_x	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^float rotate_x = 0.0, rotate_y = 0.0;$/;"	v
+rotate_y	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^float rotate_x = 0.0, rotate_y = 0.0;$/;"	v
+runKernel	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^void runKernel()$/;"	f
+saveResultOpenCL	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^void saveResultOpenCL(int argc, const char** argv, const GLuint& vbo)$/;"	f
+szGlobalWorkSize	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^size_t szGlobalWorkSize[] = {mesh_width, mesh_height};$/;"	v
+translate_z	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^float translate_z = -3.0;$/;"	v
+uiDevCount	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^cl_uint uiDevCount;$/;"	v
+vbo	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^GLuint vbo;$/;"	v
+vbo_cl	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^cl_mem vbo_cl;$/;"	v
+window_height	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^const unsigned int window_height = 512;$/;"	v
+window_width	/Developer/GPU Computing/OpenCL/src/oclSimpleGL/oclSimpleGL.cpp	/^const unsigned int window_width = 512;$/;"	v
