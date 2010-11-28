@@ -10,3 +10,11 @@ Based on ${GPUCOMPUTING_SDK_ROOT}/OpenCL/src/oclVectorAdd.cpp
 ###########################################################
 *Device compability query
 Based on ${GPUCOMPUTING_SDK_ROOT}/OpenCL/src/oclDeviceQuery.cpp
+
+###########################################################
+### lesson02
+###########################################################
+* simple OpenGL Inter Operation
+* add shared and OpenCL utilities src lib
+* support both i386 and x86_64 architecture
+Based on ${GPUCOMPUTING_SDK_ROOT}/OpenCL/src/oclSimpleGL.cpp
