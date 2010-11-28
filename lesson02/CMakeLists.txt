@@ -1,24 +1,55 @@
-cmake_minimum_required(VERSION 2.6)
-set(TARGET lesson02)
-set(SRC lesson02.cpp)
-project (${TARGET})
-set(GPUCOMPUTING_SDK_ROOT "/Developer/GPU\ Computing") 
-include_directories("${GPUCOMPUTING_SDK_ROOT}/OpenCL/common/inc")
-include_directories("${GPUCOMPUTING_SDK_ROOT}/shared/inc")
-find_library(OCLUTIL_LIBRARY liboclUtil_i386.a "${GPUCOMPUTING_SDK_ROOT}/OpenCL/common/lib")
-find_library(SHRUTIL_LIBRARY libshrUtil_i386.a "${GPUCOMPUTING_SDK_ROOT}/shared/lib")
-find_library(OPENCL_LIBRARIES OpenCL ENV LD_LIBRARY_PATH)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+SET(TARGET lesson02)
+SET(SRC lesson02.cpp)
+PROJECT (${TARGET})
+SET(GPUCOMPUTING_SDK_ROOT "/Developer/GPU\ Computing") 
+INCLUDE_DIRECTORIES("${GPUCOMPUTING_SDK_ROOT}/OpenCL/common/inc")
+INCLUDE_DIRECTORIES("${GPUCOMPUTING_SDK_ROOT}/shared/inc")
+
+
+SET(MACARCH "-arch i386 -arch x86_64") 
+##############################################
+## OpenCL utility libraries
+SET(OCLUTIL_LIB_SRC
+    ${GPUCOMPUTING_SDK_ROOT}/OpenCL/common/src/oclUtils.cpp
+)
+SET_SOURCE_FILES_PROPERTIES(${OCLUTIL_LIB_SRC} 
+    PROPERTIES COMPILE_FLAGS ${MACARCH})
+ADD_LIBRARY(oclutil ${OCLUTIL_LIB_SRC})
+SET(OCLUTIL_LIBRARY oclutil)
+
+##############################################
+## shared utility libraries
+SET(SHRUTIL_LIB_SRC
+    ${GPUCOMPUTING_SDK_ROOT}/shared/src/shrUtils.cpp
+    ${GPUCOMPUTING_SDK_ROOT}/shared/src/cmd_arg_reader.cpp
+)
+SET_SOURCE_FILES_PROPERTIES(${SHRUTIL_LIB_SRC}
+    PROPERTIES COMPILE_FLAGS ${MACARCH})
+ADD_LIBRARY(shrutil ${SHRUTIL_LIB_SRC})
+SET(SHRUTIL_LIBRARY shrutil)
+##############################################
+## OpenGL libraries
+FIND_LIBRARY(OPENCL_LIBRARIES OpenCL ENV LD_LIBRARY_PATH)
 FIND_LIBRARY(OpenGL_LIBRARY OpenGL )
 FIND_LIBRARY(GLUT_LIBRARY GLUT )
 FIND_LIBRARY( GLEW_LIBRARY
         NAMES GLEW glew
         DOC "The GLEW library")
-add_executable(${TARGET} ${SRC})
-target_link_libraries(${TARGET} ${OPENCL_LIBRARIES})
-target_link_libraries(${TARGET} ${OCLUTIL_LIBRARY})
-target_link_libraries(${TARGET} ${SHRUTIL_LIBRARY})
-target_link_libraries(${TARGET} ${OpenGL_LIBRARY})
-target_link_libraries(${TARGET} ${GLUT_LIBRARY})
-target_link_libraries(${TARGET} ${GLEW_LIBRARY})
-set_target_properties(${TARGET} PROPERTIES COMPILE_FLAGS "-arch i386" LINK_FLAGS "-arch i386")
+##############################################
+## Executable Target
+ADD_EXECUTABLE(${TARGET} ${SRC})
+SET_TARGET_PROPERTIES(${TARGET} PROPERTIES 
+    COMPILE_FLAGS ${MACARCH} 
+    LINK_FLAGS ${MACARCH})
+TARGET_LINK_LIBRARIES(${TARGET} ${OPENCL_LIBRARIES})
+TARGET_LINK_LIBRARIES(${TARGET} ${OCLUTIL_LIBRARY})
+TARGET_LINK_LIBRARIES(${TARGET} ${SHRUTIL_LIBRARY})
+TARGET_LINK_LIBRARIES(${TARGET} ${OpenGL_LIBRARY})
+TARGET_LINK_LIBRARIES(${TARGET} ${GLUT_LIBRARY})
+TARGET_LINK_LIBRARIES(${TARGET} ${GLEW_LIBRARY})
+SET_TARGET_PROPERTIES(${TARGET} PROPERTIES 
+    COMPILE_FLAGS ${MACARCH} 
+    LINK_FLAGS ${MACARCH})
+
 
