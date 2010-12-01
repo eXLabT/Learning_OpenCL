@@ -29,6 +29,10 @@
 // common SDK header for standard utilities and system libs 
 #include <oclUtils.h>
 
+namespace ocl
+{
+    cl_context  Context;
+}
 // Name of the file with the source code for the computation kernel
 // *********************************************************************
 const char* cSourceFile = "VectorAdd.cl";
@@ -39,7 +43,6 @@ void *srcA, *srcB, *dst;        // Host buffers for OpenCL test
 void* Golden;                   // Host buffer for host golden processing cross check
 
 // OpenCL Vars
-cl_context cxGPUContext;        // OpenCL context
 cl_command_queue cqCommandQueue;// OpenCL command que
 cl_platform_id cpPlatform;      // OpenCL platform
 cl_device_id cdDevice;          // OpenCL device
@@ -109,7 +112,7 @@ int main(int argc, char **argv)
     }
 
     //Create the context
-    cxGPUContext = clCreateContext(0, 1, &cdDevice, NULL, NULL, &ciErr1);
+    ocl::Context = clCreateContext(0, 1, &cdDevice, NULL, NULL, &ciErr1);
     shrLog("clCreateContext...\n"); 
     if (ciErr1 != CL_SUCCESS)
     {
@@ -118,7 +121,7 @@ int main(int argc, char **argv)
     }
 
     // Create a command-queue
-    cqCommandQueue = clCreateCommandQueue(cxGPUContext, cdDevice, 0, &ciErr1);
+    cqCommandQueue = clCreateCommandQueue(ocl::Context, cdDevice, 0, &ciErr1);
     shrLog("clCreateCommandQueue...\n"); 
     if (ciErr1 != CL_SUCCESS)
     {
@@ -127,10 +130,10 @@ int main(int argc, char **argv)
     }
 
     // Allocate the OpenCL buffer memory objects for source and result on the device GMEM
-    cmDevSrcA = clCreateBuffer(cxGPUContext, CL_MEM_READ_ONLY, sizeof(cl_float) * szGlobalWorkSize, NULL, &ciErr1);
-    cmDevSrcB = clCreateBuffer(cxGPUContext, CL_MEM_READ_ONLY, sizeof(cl_float) * szGlobalWorkSize, NULL, &ciErr2);
+    cmDevSrcA = clCreateBuffer(ocl::Context, CL_MEM_READ_ONLY, sizeof(cl_float) * szGlobalWorkSize, NULL, &ciErr1);
+    cmDevSrcB = clCreateBuffer(ocl::Context, CL_MEM_READ_ONLY, sizeof(cl_float) * szGlobalWorkSize, NULL, &ciErr2);
     ciErr1 |= ciErr2;
-    cmDevDst = clCreateBuffer(cxGPUContext, CL_MEM_WRITE_ONLY, sizeof(cl_float) * szGlobalWorkSize, NULL, &ciErr2);
+    cmDevDst = clCreateBuffer(ocl::Context, CL_MEM_WRITE_ONLY, sizeof(cl_float) * szGlobalWorkSize, NULL, &ciErr2);
     ciErr1 |= ciErr2;
     shrLog("clCreateBuffer...\n"); 
     if (ciErr1 != CL_SUCCESS)
@@ -145,7 +148,7 @@ int main(int argc, char **argv)
     cSourceCL = oclLoadProgSource(cPathAndName, "", &szKernelLength);
 
     // Create the program
-    cpProgram = clCreateProgramWithSource(cxGPUContext, 1, (const char **)&cSourceCL, &szKernelLength, &ciErr1);
+    cpProgram = clCreateProgramWithSource(ocl::Context, 1, (const char **)&cSourceCL, &szKernelLength, &ciErr1);
     shrLog("clCreateProgramWithSource...\n"); 
     if (ciErr1 != CL_SUCCESS)
     {
@@ -239,7 +242,7 @@ void Cleanup (int iExitCode)
 	if(ckKernel)clReleaseKernel(ckKernel);  
     if(cpProgram)clReleaseProgram(cpProgram);
     if(cqCommandQueue)clReleaseCommandQueue(cqCommandQueue);
-    if(cxGPUContext)clReleaseContext(cxGPUContext);
+    if(ocl::Context)clReleaseContext(ocl::Context);
     if(cmDevSrcA)clReleaseMemObject(cmDevSrcA);
     if(cmDevSrcB)clReleaseMemObject(cmDevSrcB);
     if(cmDevDst)clReleaseMemObject(cmDevDst);

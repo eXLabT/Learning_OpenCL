@@ -2,16 +2,14 @@
 #include <GL/glew.h>
 #include <GLUT/glut.h>
 #include <OpenGL/OpenGL.h>
+#include "cocl/cocl.h"
 // Rendering vars
 const unsigned int window_width = 512;
 const unsigned int window_height = 512;
 const unsigned int mesh_width = 256;
 const unsigned int mesh_height = 256;
 // OpenCL variables
-cl_context  GPUContext;
-cl_device_id* devices;
 cl_program kernelProgram;
-cl_command_queue commandQueue;
 cl_kernel kernel;
 const unsigned int vboSize = mesh_width * mesh_height * 4 * sizeof(float);
 cl_mem vbo_cl;
@@ -45,8 +43,6 @@ void (*cleanupFunc)(int) = &Cleanup;
 int main(int argc,const char** argv)
 {
     cl_int err;
-    cl_platform_id platformID;
-    cl_uint devCount;
 
     // start logs
     shrSetLogFileName("lesson02.txt");
@@ -55,44 +51,13 @@ int main(int argc,const char** argv)
     //Initialize OpenGL items
     InitGL(argc,argv);
 
-    // Get the platform ID
-    err = oclGetPlatformID(&platformID);
-    oclCheckErrorEX(err, CL_SUCCESS, cleanupFunc);
-
-    // Get the number of GPU devices avaliable to the platform
-    err = clGetDeviceIDs(platformID, CL_DEVICE_TYPE_GPU, 0, NULL, &devCount);
-    oclCheckErrorEX(err, CL_SUCCESS, cleanupFunc);
-
-    // Retrieve device IDs list
-    devices = new cl_device_id [devCount];
-    err = clGetDeviceIDs (platformID, CL_DEVICE_TYPE_GPU, devCount,devices,NULL);
-    oclCheckErrorEX(err, CL_SUCCESS, cleanupFunc);
-
-    //Pass check whether devices support context sharing with OpenGL
-    //...
-    //
-
-    // Define OS-specific context properties and create the OpenCL context
-    // 
-#if defined (__APPLE__)
-    CGLContextObj cglContext = CGLGetCurrentContext();
-    CGLShareGroupObj CGLShareGroup = CGLGetShareGroup(cglContext);
-    cl_context_properties props[] = 
-    {
-        CL_CONTEXT_PROPERTY_USE_CGL_SHAREGROUP_APPLE,
-        (cl_context_properties)CGLShareGroup,
-        0
-    };
-    GPUContext = clCreateContext(props,0,0,NULL,NULL,&err);
-    oclCheckErrorEX(err, CL_SUCCESS, cleanupFunc);
-#else
-    #pragma error "Only support Mac Platform Now"
-#endif
-    
+    //Initialize OpenCL 
+    cocl::Init(true);
 
     // create a command-queue
-    commandQueue = clCreateCommandQueue(GPUContext, devices[0], 0, &err);
+    err = cocl::createCommandQueue(cocl::cmdQueue);
     shrCheckErrorEX(err, CL_SUCCESS, cleanupFunc);
+    
     // Program Setup
     size_t program_length;
     cPathAndName = shrFindFilePath("simpleGL.cl", argv[0]);
@@ -101,8 +66,7 @@ int main(int argc,const char** argv)
     shrCheckErrorEX(cSourceCL != NULL, shrTRUE, cleanupFunc);
 
     // create the program
-    kernelProgram = clCreateProgramWithSource(GPUContext, 1,
-					  (const char **) &cSourceCL, &program_length, &err);
+    err = cocl::createProgramWithSource(kernelProgram,(const char**)&cSourceCL,program_length,1);    
     shrCheckErrorEX(err, CL_SUCCESS, cleanupFunc);
 
     // build the program
@@ -111,8 +75,8 @@ int main(int argc,const char** argv)
     {
         // write out standard error, Build Log and PTX, then cleanup and exit
         shrLogEx(LOGBOTH | ERRORMSG, err, STDERROR);
-        oclLogBuildInfo(kernelProgram, oclGetFirstDev(GPUContext));
-        oclLogPtx(kernelProgram, oclGetFirstDev(GPUContext), "oclSimpleGL.ptx");
+        oclLogBuildInfo(kernelProgram, oclGetFirstDev(cocl::Context));
+        oclLogPtx(kernelProgram, oclGetFirstDev(cocl::Context), "oclSimpleGL.ptx");
         Cleanup(EXIT_FAILURE); 
     }
 
@@ -219,22 +183,23 @@ void runKernel ()
     // map OpenGL buffer object for writing from OpenCL
     {
         glFinish();
-        err = clEnqueueAcquireGLObjects(commandQueue, 1, &vbo_cl, 0,0,0);
+        err = clEnqueueAcquireGLObjects(cocl::cmdQueue, 1, &vbo_cl, 0,0,0);
         shrCheckErrorEX(err, CL_SUCCESS, cleanupFunc);
     }
     
     // Set arg 3 and execute the kernel
     err = clSetKernelArg(kernel, 3, sizeof(float),&anim);
-    err |= clEnqueueNDRangeKernel(commandQueue, kernel, 2, NULL, globalWorkSize, NULL,0,0,0);
+    err |= clEnqueueNDRangeKernel(cocl::cmdQueue, kernel, 2, NULL, globalWorkSize, NULL,0,0,0);
     shrCheckErrorEX(err, CL_SUCCESS, cleanupFunc);
 
     if(g_GL_InterOp)
     //unmap buffer object
     {
-        err = clEnqueueReleaseGLObjects(commandQueue, 1, &vbo_cl, 0,0,0);
+        err = clEnqueueReleaseGLObjects(cocl::cmdQueue, 1, &vbo_cl, 0,0,0);
         shrCheckErrorEX(err, CL_SUCCESS, cleanupFunc);
-        clFinish(commandQueue);
+        clFinish(cocl::cmdQueue);
     }
+    else
     //Explicit Copy
     {
         // map the PBO to copy data from the CL buffer via host
@@ -243,7 +208,7 @@ void runKernel ()
         // map the buffer object into client's memory
         void* ptr = glMapBufferARB(GL_ARRAY_BUFFER, GL_WRITE_ONLY_ARB);
 
-        err = clEnqueueReadBuffer(commandQueue, vbo_cl, CL_TRUE, 0, vboSize, ptr, 0, NULL, NULL);
+        err = clEnqueueReadBuffer(cocl::cmdQueue, vbo_cl, CL_TRUE, 0, vboSize, ptr, 0, NULL, NULL);
         shrCheckErrorEX(err, CL_SUCCESS, cleanupFunc);
 
         glUnmapBufferARB(GL_ARRAY_BUFFER);
@@ -265,12 +230,13 @@ void createVBO(GLuint * vbo)
     if(g_GL_InterOp)
     // create OpenCL buffer from GL VBO
     {
-        vbo_cl = clCreateFromGLBuffer(GPUContext, CL_MEM_WRITE_ONLY, *vbo, NULL);
+        vbo_cl = clCreateFromGLBuffer(cocl::Context, CL_MEM_WRITE_ONLY, *vbo, NULL);
     }
+    else
     // create standard OpenCL mem buffer
     {
         cl_int err;
-        vbo_cl = clCreateBuffer(GPUContext,CL_MEM_WRITE_ONLY, vboSize, NULL, &err);
+        vbo_cl = clCreateBuffer(cocl::Context,CL_MEM_WRITE_ONLY, vboSize, NULL, &err);
         shrCheckErrorEX(err, CL_SUCCESS, cleanupFunc);
     }
 }
@@ -283,7 +249,6 @@ void Cleanup(int exitCode)
     shrLog("\nStarting Cleanup...\n\n");
     if(kernel)clReleaseKernel(kernel);
     if(kernelProgram)clReleaseProgram(kernelProgram);
-    if(commandQueue)clReleaseCommandQueue(commandQueue);
     if(vbo)
     {
         glBindBuffer(1,vbo);
@@ -291,11 +256,10 @@ void Cleanup(int exitCode)
         vbo = 0;
     }
     if(vbo_cl)clReleaseMemObject(vbo_cl);
-    if(GPUContext)clReleaseContext(GPUContext);
+    cocl::Release();
     if(iGLUTWindowHandle)glutDestroyWindow(iGLUTWindowHandle);
     if(cPathAndName)free(cPathAndName);
     if(cSourceCL)free(cSourceCL);
-    if(devices)delete(devices);
     
     // finalize logs and leave
     shrLogEx(LOGBOTH | CLOSELOG, 0, "oclSimpleGL.exe Exiting...\nPress <Enter> to Quit\n");
